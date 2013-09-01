@@ -1,4 +1,4 @@
-jQuery Typewriter - The typewriter effect.
+The typewriter effect.
 =================
 
 ### Why yet another plugin for something that simple?
