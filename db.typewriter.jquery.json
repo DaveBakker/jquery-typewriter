@@ -13,6 +13,7 @@
         "url": "http://github.com/DaveBakker/jquery-typewriter"
     }
   ],
+  "description": "A more sophisticated typewriter effect.",
   "dependencies": {
     "jquery": ">=1.4"
   },
