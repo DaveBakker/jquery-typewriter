@@ -54,7 +54,7 @@ Homepage and license at: http://github.com/DaveBakker/jquery-typewriter
             }
         };
 
-        if (target.length) return typewriter;
+        if (!target.length) return typewriter;
 
         typewriter.typing = true;
 
