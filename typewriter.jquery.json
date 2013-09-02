@@ -1,0 +1,34 @@
+{
+  "name": "db.typewriter",
+  "version": "0.1.0",
+  "name": "Typewriter",
+  "author": {
+    "name": "Dave Bakker",
+    "email": "Dave.Bakker@outlook.com",
+    "url": "http://github.com/DaveBakker"
+  },
+  "licenses": [
+    {
+        "type": "BSD-2-Clause",
+        "url": "http://github.com/DaveBakker/jquery-typewriter"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.4"
+  },
+  "keywords": [
+    "type",
+    "typer",
+    "typing",
+    "typewriter",
+    "write",
+    "writer",
+    "writing",
+    "animation",
+    "animate",
+    "animating"
+  ],
+  "homepage": "http://github.com/DaveBakker/jquery-typewriter",
+  "docs": "http://github.com/DaveBakker/jquery-typewriter",
+  "bugs": "http://github.com/DaveBakker/jquery-typewriter/issues"
+}
