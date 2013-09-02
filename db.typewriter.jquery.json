@@ -27,7 +27,8 @@
     "writing",
     "animation",
     "animate",
-    "animating"
+    "animating",
+    "effect"
   ],
   "homepage": "http://github.com/DaveBakker/jquery-typewriter",
   "docs": "http://github.com/DaveBakker/jquery-typewriter",
