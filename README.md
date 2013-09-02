@@ -67,7 +67,6 @@ Todo...
 
 
 #License
-# License
 
 **Copyright (c) 2013, Dave Bakker**  
 **All rights reserved.**  
