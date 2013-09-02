@@ -1,15 +1,179 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="author" content="Dave Bakker" />
-    <meta name="keywords" content="" />
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-	<title>Typewriter</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-</head>
-<body>
-    Jej
-</body>
+    <title>Typewriter by DaveBakker</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Typewriter</h1>
+        <h2>The typewriter effect.</h2>
+        <a href="https://github.com/DaveBakker/jquery-typewriter" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="the-typewriter-effect" class="anchor" href="#the-typewriter-effect"><span class="octicon octicon-link"></span></a>The typewriter effect.</h1>
+
+<h3>
+<a name="why-yet-another-plugin-for-something-that-simple" class="anchor" href="#why-yet-another-plugin-for-something-that-simple"><span class="octicon octicon-link"></span></a>Why yet another plugin for something that simple?</h3>
+
+<p>Most plugins similar to this one have the same basic functionality: type text/html at a certain speed and fire a callback once done.
+While working on a project of mine, I needed some more advanced stuff. Like the ability to pause, resume and stop the typewriter. 
+Also, when typing something longer than a view characters, you'll notice everything is being typed at an inhuman constant speed.
+To compensate for that, this plugin has the ability to randomize the interval between keystrokes.</p>
+
+<h3>
+<a name="caret" class="anchor" href="#caret"><span class="octicon octicon-link"></span></a>Caret</h3>
+
+<p>This plugin does not provide methods for simulating a caret. There are simply too many ways to mimic a caret.
+It could be a plain text underscore or vertical bar, it could be a span element or it could be an image. 
+Should it blink? At what speed? Should it be visible longer than it is invisible? How about a small fade? 
+Too many variables that differ per usecase to be covered by this plugin.</p>
+
+<p>You can create your own caret by placing it right after the typewriter target:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"typeMe"</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"caret"</span><span class="nt">&gt;</span>|<span class="nt">&lt;/span&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+  <span class="c1">// A simple blink</span>
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#caret"</span><span class="p">).</span><span class="nx">toggle</span><span class="p">();</span>
+  <span class="p">},</span> <span class="mi">600</span><span class="p">);</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s2">"#typeMe"</span><span class="p">).</span><span class="nx">typewriter</span><span class="p">(</span><span class="s2">"Some text. I don't know."</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<h1>
+<a name="fntypewritertext-options" class="anchor" href="#fntypewritertext-options"><span class="octicon octicon-link"></span></a>$.fn.typewriter(text, options)</h1>
+
+<p>Creates a typewriter object for the first matching element in the set.</p>
+
+<h3>
+<a name="arguments" class="anchor" href="#arguments"><span class="octicon octicon-link"></span></a>Arguments</h3>
+
+<ul>
+<li>
+<code>text</code>: The text to type. Duh.</li>
+<li>
+<code>options</code>: An object containing the options and callbacks to control the typewriter:
+
+<ul>
+<li>
+<code>delay</code>: Interval between the simulated keystrokes (in milliseconds). <em>[default: 60]</em>
+</li>
+<li>
+<code>initialDelay</code>: How much time to wait before doing anything (in milliseconds). <em>[default: 0]</em>
+</li>
+<li>
+<code>createPaused</code>: Whether the typewriter should be created in a paused state. <em>[default: false]</em>
+</li>
+<li>
+<code>html</code>: Whether the <code>text</code> argument should be interpreted as HTML or not. Has no use on input and textarea elements. <em>[default: false]</em>
+</li>
+<li>
+<code>randomizeDelay</code>: Whether the interval between keystrokes should be randomized to mimic a real person typing. The random times are based on the <code>delay</code> option, so the average typing speed remains the same. <em>[default: false]</em>
+</li>
+<li>
+<code>onType</code>: Gets called after each keystroke. <em>[default: $.noop]</em>
+</li>
+<li>
+<code>onComplete</code>: Gets called when the typewriter has reached the end of the string. This can only be once in the lifetime of the typewriter object. <em>[default: $.noop]</em>
+</li>
+<li>
+<code>onPause</code>: Notifies when the typewriter pauses. <em>[default: $.noop]</em>
+</li>
+<li>
+<code>onResume</code>: Notifies when the typewriter resumes. <em>[default: $.noop]</em>
+</li>
+<li>
+<code>onStop</code>: Notifies when the typewriter stops. This can only be once in the lifetime of the typewriter object. <em>[default: $.noop]</em>
+</li>
+</ul>
+</li>
+</ul><h3>
+<a name="return-value" class="anchor" href="#return-value"><span class="octicon octicon-link"></span></a>Return value</h3>
+
+<p>A typewriter object described in the next section. </p>
+
+<h1>
+<a name="typewriter" class="anchor" href="#typewriter"><span class="octicon octicon-link"></span></a>Typewriter</h1>
+
+<h2>
+<a name="properties" class="anchor" href="#properties"><span class="octicon octicon-link"></span></a>Properties</h2>
+
+<ul>
+<li>
+<code>options</code>: A shallow clone of the options object passed into the $.fn.typewriter function. The object is augmented with the default values.</li>
+<li>
+<code>target</code>: A jQuery object referencing the element to which the typewriter is typing in.</li>
+<li>
+<code>typing</code>: Indicating whether the typewriter is currently typing.</li>
+<li>
+<code>paused</code>: Indicating whether the typewriter is currently paused.</li>
+</ul><h2>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h2>
+
+<ul>
+<li>
+<code>pause()</code>: Pauses the typewriter.</li>
+<li>
+<code>resume()</code>: Resumes the typewriter.</li>
+<li>
+<code>stop()</code>: Stops the typewriter.</li>
+</ul><h1>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h1>
+
+<p>Todo...</p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p><strong>Copyright (c) 2013, Dave Bakker</strong><br><strong>All rights reserved.</strong>  </p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/DaveBakker/jquery-typewriter/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/DaveBakker/jquery-typewriter/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/DaveBakker/jquery-typewriter"></a> is maintained by <a href="https://github.com/DaveBakker">DaveBakker</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
 </html>
